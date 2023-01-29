@@ -1,4 +1,61 @@
-body {
-  background: #eee;
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.title {
   text-align: center;
+  margin-bottom: 100px;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: normal;
+}
+.wrapper {
+  max-width: 1440px;
+  height: 90vh;
+  margin: 20px auto;
+  padding-top: 25px;
+  background-color: #eee;
+}
+.cart-wrapper {
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  background-color: #fff;
+}
+.cart-images-list {
+  display: flex;
+  margin-bottom: 10px;
+}
+.cart-img {
+  border-radius: 3px;
+  width: 40px;
+  height: 25px;
+  list-style: none;
+}
+.cart-img:not(:last-child) {
+  margin-right: 5px;
+}
+
+.validate-form {
+  display: flex;
+}
+.submit {
+  border: none;
+  display: block;
+  font-family: Roboto;
+  font-weight: 300;
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  text-decoration: none;
+  height: 30px;
+  width: 125px;
+  border-radius: 5px;
+  background-color: rgb(106, 208, 78);
 }

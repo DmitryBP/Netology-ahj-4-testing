@@ -1,0 +1,69 @@
+.cart-img {
+  background-position-y: -25px;
+}
+.activ {
+  background-position-y: 0px;
+}
+.visa {
+  background-image: url(./img/card-visa.gif);
+  background-repeat: no-repeat;
+  /* background-position-y: -25px; */
+}
+
+.mastercard {
+  background-image: url(./img/card-mastercard.gif);
+  background-repeat: no-repeat;
+  /* background-position-y: -25px; */
+}
+.jcb {
+  background-image: url(./img/card-jcb.gif);
+  background-repeat: no-repeat;
+  /* background-position-y: -25px; */
+}
+.discover {
+  background-image: url(./img/card-discover.gif);
+  background-repeat: no-repeat;
+  /* background-position-y: -25px; */
+}
+.diners-club {
+  background-image: url(./img/card-diners.gif);
+  background-repeat: no-repeat;
+  /* background-position-y: -25px; */
+}
+.american-express {
+  background-image: url(./img/card-amex.gif);
+  background-repeat: no-repeat;
+  /* background-position-y: -25px; */
+}
+
+.card-number-field {
+  height: 30px;
+  width: 205px;
+  padding: 0px 10px;
+  margin-right: 15px;
+  border: 1px solid rgb(183, 183, 180);
+  border-radius: 5px;
+  color: gray;
+  /* background-image: url(./img/free-icon-checkmark-8625364.png); */
+  /* background-image: url(./img/free-icon-remove-1828843.png); */
+  background-size: 15px;
+  background-repeat: no-repeat;
+  background-position-x: 97%;
+  background-position-y: center;
+}
+
+.card-number-field__valid {
+  background-image: url(./img/free-icon-checkmark-8625364.png);
+}
+.card-number-field__invalid {
+  background-image: url(./img/free-icon-remove-1828843.png);
+}
+
+.validate-text {
+  margin-top: 5px;
+  padding-left: 10px;
+  color: red;
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 14px;
+}

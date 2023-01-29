@@ -1,259 +1,70 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/olb9r3w5i04lhhdy?svg=true)](https://ci.appveyor.com/project/DmitryBP/webpack5-template)
+# Домашнее задание к занятию "4.Организация тестирования"
+[Задание](https://github.com/netology-code/ahj-homeworks/tree/video/testing)
 
-# Webpack 5 Template
+Правила сдачи задания:
 
-Сборка выполнена на основании [этой статьи ](https://www.robinwieruch.de/webpack-advanced-setup-tutorial/)
+1. **Важно**: в рамках этого ДЗ можно использовать любой менеджер пакетов
+1. **Важно**: всё должно собираться через Webpack (включая картинки и стили) и выкладываться на Github Pages через Appveyor.
+1. Всё задание можно выполнить в виде одного Github-репозитория
+1. В README.md должен быть размещён бейджик сборки и ссылка на Github Pages
+1. В качестве результата присылайте проверяющему ссылки на ваши GitHub-проект(ы)
 
-## 1. Init project
+В качестве примера организации e2e-тестирования используйте код из каталога [`e2e`](e2e).
 
-[Инструкция.](https://www.robinwieruch.de/javascript-project-setup-tutorial/)
+---
 
-```
-npm init -y
-mkdir src
-cd src
-touch index.js
-```
+### Credit Card Validator
 
-```
-touch .gitignore
-```
+#### Легенда
 
-[.gitignore от Нетологии](https://github.com/netology-code/ahj-code/blob/master/env/.gitignore)
+Вам пришла задача: сделать виджет, позволяющий вводить номер карты (можете в качестве общего развития почитать про PCI DSS).
 
-## 2. Webpack 5 - Setup Tutorial
+Общий вид виджета должен выглядеть следующим образом:
 
-[Инструкция.](https://www.robinwieruch.de/webpack-setup-tutorial/)
+![](../Netology-ahj-4-testing/src/img/validator.png)
 
-```
-npm install -D webpack webpack-dev-server webpack-cli
-```
+Скриншот взят с сайта http://www.validcreditcardnumber.com.
 
-```
-npm install -D html-webpack-plugin
-```
+Вам нужно провести исследовательскую работу и выяснить - на базе чего определяется, какой платёжной системе принадлежит определённая карта (не забудьте про "Мир").
 
-```
-npm install -D html-loader
-```
+#### Описание
 
-```
-npm install -D clean-webpack-plugin
-```
+Используйте [следующий алгоритм](https://en.wikipedia.org/wiki/Luhn_algorithm) для проверки валидности номера карты.
 
-```
-npm install -D @babel/core @babel/preset-env
-```
+Изображения для карт необходимо найти самостоятельно (помните, про авторские права и недопустимость нелегального использования). Обычно информацию об использованных изображениях размещают в файле `licenses.txt` и кладут в корень сайта (настройте для этого соответствующим образом Webpack).
 
-```
-npm install -D babel-loader
-```
+Разделите логику проверки номера карты, выяснения принадлежности определённой платёжной системе и взаимодействия с DOM.
 
-```
-npm install -D css-loader style-loader
-```
+Напишите авто-тесты на функции проверки номера карты и принадлежности определённой платёжной системе.
 
-```
-npm install --save-dev mini-css-extract-plugin
-```
+В качестве источника номеров карт используйте сервис [FreeFormatter](https://www.freeformatter.com/credit-card-number-generator-validator.html).
 
-```
-touch webpack.config.js
-```
+Удостоверьтесь, что всё работает при прогоне тестов в Appveyor.
 
-```
-touch .babelrc
-```
+<details>
+<summary>Подсказка</summary>
 
-`webpack.config.js`
+Для поиска изображений можете воспользоваться сервисом https://findicons.com**
+</details>
 
-```js
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+---
 
-module.exports = {
-  entry: path.resolve(__dirname, './src/index.js'),
-  module: {
-    rules: [
-      {
-        test: /\.(js)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-      {
-        test: /\.(css)$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['*', '.js'],
-  },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
-  },
-  devServer: {
-    static: path.resolve(__dirname, './src'),
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      title: 'Hello Webpack bundled JavaScript Project',
-      template: path.resolve(__dirname, './src/index.html'),
-    }),
-  ],
-};
-```
+### Puppeteer* (задача со звёздочкой)
 
-`.babelrc`
+Важно: эта задача не является обязательной. Её (не)выполнение не влияет на получение зачёта по ДЗ.
 
-```js
-{
-  "presets": [
-    "@babel/preset-env"
-  ]
-}
-```
+Подключите Puppeteer и проверьте взаимодействие для двух различных вариантов:
+1. Ввод валидного номера карты
+1. Ввод невалидного номера краты
 
-Create `src/index.html`
+Удостоверьтесь, что всё работает при прогоне тестов в Appveyor (не забудьте про headless-mode).
 
-```js
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <div>
-      <h1><%= htmlWebpackPlugin.options.title %></h1>
+---
 
-      <div id="app">
-    </div>
-  </body>
-</html>
-```
+### JSDOM (задача со звёздочкой)
 
-## 3. ESlint - Setup Tutorial
+Важно: эта задача не является обязательной. Её (не)выполнение не влияет на получение зачёта по ДЗ.
 
-[Инструкция.](https://www.robinwieruch.de/webpack-eslint/)
+К предыдущей задаче подключите JSDOM и реализуйте проверку с использованием `jest.each` (т.е. вам надо проверить взаимодействие с DOM).
 
-```
-npm install --save-dev eslint-webpack-plugin
-```
-
-```
-npm install --save-dev @babel/eslint-parser
-```
-
-```
-npx install-peerdeps --dev eslint-config-airbnb
-```
-
-```
-touch .eslintrc
-```
-
-```
-touch .eslintignore
-```
-
-`webpack.config.js `
-
-```js
-
-...
-const ESLintPlugin = require('eslint-webpack-plugin'); // +
-
-module.exports = {
-  ...
-  plugins: [new ESLintPlugin()], // +
-  ...
-};
-```
-
-`.eslintrc`
-
-```js
-{
-  "parser": "@babel/eslint-parser",
-  "extends": ["airbnb"]
-}
-```
-
-`.eslintignore`
-
-```js
-dist
-coverage
-doc
-webpack.*.js
-```
-
-### ESlint Autofixible
-
-`Command + Shift + P` -> `Open user setting (JSON)`
-
-```js
-...
-"editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-  }
-...
-```
-
-## JEST
-
-```
-npm install --save-dev jest babel-jest
-```
-
-## WEBPACK MERGE CONFIGURATION
-
-[Инструкция.](https://www.robinwieruch.de/webpack-advanced-setup-tutorial/#how-to-manage-your-webpack-build-folder)
-
-```
-npm install -D webpack-merge
-```
-
-```
-mkdir build-utils
-touch webpack.common.js
-touch webpack.config.js
-touch webpack.dev.js
-touch webpack.prod.js
-```
-
-## mini-css-extract-plugin
-
-[Инструкция.](https://www.robinwieruch.de/webpack-css/)
-
-`file.js`
-
-```js
-import './style.css';
-```
-## How to use Images with Webpack 5 - Setup Tutorial
-
-[Инструкция.](https://webpack.js.org/guides/asset-management/#loading-images)
-
-
-`webpack.config.js`
-
-```js
-+     {
-+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-+        type: 'asset/resource',
-+      },
-```
-
-`file.js`
-
-```js
-import html from './file.html';
-```
+Удостоверьтесь, что всё работает при прогоне тестов в Appveyor.
